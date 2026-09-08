@@ -1,7 +1,13 @@
 import type { NextConfig } from "next";
 
+// Set NEXT_PUBLIC_BASE_PATH (e.g. "/scholar") when hosting under a sub-path such as GitHub Pages.
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+
 const nextConfig: NextConfig = {
-  /* config options here */
+  output: "export",
+  basePath: basePath || undefined,
+  trailingSlash: true,
+  images: { unoptimized: true },
 };
 
 export default nextConfig;

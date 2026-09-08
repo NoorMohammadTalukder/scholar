@@ -1,0 +1,48 @@
+---
+title: Learning to Walk on Rubble Without Ever Seeing It
+subtitle: Terrain-conditioned sim-to-real transfer for quadruped robots
+authors: [henrik-lindqvist, priya-raghunathan]
+issue: vol-02-issue-01
+abstract: We train a quadruped locomotion policy entirely in simulation on procedurally generated terrain, then deploy it on a physical robot across construction rubble, scree, and stairs. A learned terrain encoder lets the policy adapt within two steps of contact. We report a 94% traversal success rate on terrain never seen in simulation.
+keywords: [robotics, reinforcement learning, sim-to-real, legged locomotion, machine learning]
+doi: 10.99999/scholar.2026.1.1
+pdf: /pdfs/lindqvist-2026-locomotion.pdf
+received: 2025-11-15
+accepted: 2026-03-01
+published: 2026-04-10
+pages: 1-24
+type: research
+featured: true
+---
+## Introduction
+
+Legged robots promise access to places wheels cannot reach, but training them in the real world is slow and dangerous. Simulation is fast and safe, and it is also wrong in ways that matter: contact dynamics, motor latency, and terrain compliance are all approximations.
+
+## Approach
+
+Our policy consumes proprioceptive history and the output of a terrain encoder trained to predict ground properties from recent foot contacts. In simulation we randomise friction, stiffness, and geometry across 40,000 procedurally generated terrains.
+
+<Figure caption="Figure 1. Training curriculum. Terrain difficulty is increased when the policy's success rate exceeds 80% on the current level.">
+Five terrain families of increasing difficulty, from flat ground to loose rubble.
+</Figure>
+
+## Experiments
+
+We deployed the policy on a 12 kg quadruped across six outdoor sites. Success was defined as reaching a waypoint 10 m away without a fall.
+
+| Terrain | Trials | Success |
+| --- | --- | --- |
+| Gravel | 30 | 100% |
+| Construction rubble | 30 | 93% |
+| Scree slope (25°) | 30 | 90% |
+| Stairs (17 cm rise) | 30 | 97% |
+
+## Discussion
+
+The terrain encoder is the key contribution. Ablating it drops rubble success to 61%. We conjecture that explicit terrain estimation gives the policy a compact, transferable representation that raw proprioception lacks.
+
+## References
+
+<ol className="references">
+<li>Lee, J., et al. (2020). Learning quadrupedal locomotion over challenging terrain. *Science Robotics*, 5, eabc5986.</li>
+</ol>

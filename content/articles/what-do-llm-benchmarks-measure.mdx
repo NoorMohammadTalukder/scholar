@@ -1,0 +1,48 @@
+---
+title: What Do Language Model Benchmarks Actually Measure?
+authors: [priya-raghunathan]
+issue: vol-01-issue-02
+abstract: Benchmark scores are treated as measurements of capability, yet the measurement theory behind them is rarely examined. Applying item response theory to twelve popular benchmarks, we find that most items discriminate poorly, that scores are dominated by a small subset of items, and that rankings between models are far less stable than reported.
+keywords: [machine learning, evaluation, psychometrics, item response theory, language models]
+doi: 10.99999/scholar.2025.2.2
+pdf: /pdfs/raghunathan-2025-benchmarks.pdf
+received: 2025-04-03
+accepted: 2025-08-15
+published: 2025-10-01
+pages: 30-58
+type: research
+featured: true
+---
+## Introduction
+
+When we say a model "scores 87% on a benchmark," we are making a measurement claim. Psychometrics has spent a century developing tools to examine such claims. This article applies them.
+
+## Method
+
+We fit two-parameter logistic item response models to per-item results from 48 models across twelve benchmarks.
+
+<Equation>
+P(correct<sub>ij</sub>) = 1 / (1 + exp(−a<sub>i</sub>(θ<sub>j</sub> − b<sub>i</sub>)))
+</Equation>
+
+where θ is the latent ability of model *j*, and *a* and *b* are the discrimination and difficulty of item *i*.
+
+## Findings
+
+- Between 30% and 60% of items in each benchmark had discrimination parameters indistinguishable from zero.
+- Removing those items changed the rank order of top-ten models in nine of twelve benchmarks.
+- Test information curves show most benchmarks are informative only in a narrow ability band that current frontier models have already passed.
+
+<Callout title="Implication">
+A one-point difference between two models on most benchmarks is within measurement error. Leaderboards should report confidence intervals derived from item-level uncertainty.
+</Callout>
+
+## Recommendations
+
+We release a toolkit for computing item statistics and propose that benchmark maintainers publish discrimination and difficulty estimates alongside aggregate scores.
+
+## References
+
+<ol className="references">
+<li>Embretson, S. E., & Reise, S. P. (2000). *Item Response Theory for Psychologists*. Erlbaum.</li>
+</ol>

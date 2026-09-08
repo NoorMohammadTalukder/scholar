@@ -1,0 +1,50 @@
+---
+title: Pollinator Networks in the Atacama After Rare Rainfall Events
+authors: [mateo-alvarez, ingrid-bauer]
+issue: vol-01-issue-01
+abstract: Rare rainfall in the Atacama Desert triggers brief but spectacular blooms. Using seven years of field observation and a hierarchical Bayesian model, we show that pollinator networks reassemble within days and that network structure, not species identity, predicts seed set.
+keywords: [ecology, pollination, Bayesian modelling, desert ecosystems, network science]
+doi: 10.99999/scholar.2025.1.2
+pdf: /pdfs/alvarez-2025-pollinators.pdf
+received: 2024-11-02
+accepted: 2025-02-14
+published: 2025-03-15
+pages: 5-27
+type: research
+featured: true
+funding: ANID Fondecyt Regular 1230456
+---
+## Introduction
+
+The Atacama is the driest non-polar desert on Earth. Yet every few years, winter rain produces a *desierto florido*, a flowering desert in which dormant seed banks erupt into bloom over thousands of square kilometres. These events are ephemeral, lasting four to eight weeks, and they pose a puzzle: how do plant–pollinator interactions reassemble so quickly when neither partner has been active for years?
+
+## Methods
+
+We surveyed 24 permanent plots across three bloom events (2017, 2022, 2024), recording every observed floral visit during standardised 20-minute transects. We fitted a hierarchical Bayesian model in which the probability of an interaction depends on plant abundance, pollinator abundance, trait matching, and a latent network-level term.
+
+<Equation>
+P(link<sub>ij</sub>) = logit<sup>-1</sup>( α + β<sub>1</sub>·A<sub>i</sub> + β<sub>2</sub>·A<sub>j</sub> + β<sub>3</sub>·M<sub>ij</sub> + u<sub>plot</sub> )
+</Equation>
+
+Posterior inference used Hamiltonian Monte Carlo with four chains of 4,000 iterations each. Code and data are archived on Zenodo.
+
+## Results
+
+Networks reached 80% of their final connectance within six days of first bloom. Nestedness was remarkably stable across events (NODF 0.61–0.64), even though species composition turned over by more than half between 2017 and 2024.
+
+<Figure caption="Figure 1. Network connectance over days since first bloom, pooled across events. Shaded bands show 90% posterior intervals.">
+Connectance rose steeply in the first week and plateaued thereafter in all three events.
+</Figure>
+
+Seed set was best predicted by a plant's position in the network (its weighted degree) rather than by the identity of its most frequent visitor.
+
+## Discussion
+
+The speed of reassembly suggests that network structure is encoded in traits rather than in learned partner preferences. This has a practical implication: conservation of the desierto florido should prioritise functional diversity of pollinators over individual species.
+
+## References
+
+<ol className="references">
+<li>Bascompte, J., & Jordano, P. (2007). Plant–animal mutualistic networks. *Annual Review of Ecology, Evolution, and Systematics*, 38, 567–593.</li>
+<li>Chávez, R. O., et al. (2019). GIMMS NDVI time series reveal the extent and dynamics of the desierto florido. *Remote Sensing*, 11, 1321.</li>
+</ol>

@@ -1,36 +1,77 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Scholar — academic journal website
 
-## Getting Started
+A static-first, animation-rich journal site built with Next.js (App Router), Tailwind CSS v4, Motion, and Lenis. Content lives in the repo as MDX; there is no database or CMS.
 
-First, run the development server:
+## Run it
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev        # http://localhost:3000
+npm run build      # static production build
+npm run lint
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Where things live
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Path | What |
+|---|---|
+| `content/articles/*.mdx` | One file per article (frontmatter + full text) |
+| `content/issues/*.mdx` | One file per issue (frontmatter + editorial note) |
+| `content/authors/*.mdx` | One file per author (frontmatter + short bio) |
+| `content/news/*.mdx` | Announcements, calls for papers, events |
+| `content/pages/*.mdx` | Aims & scope, policies, submission guidelines |
+| `public/pdfs/` | Article PDFs and the manuscript template |
+| `src/lib/site.ts` | Journal name, ISSN, publisher, nav, editorial board, indexing partners |
+| `src/lib/content/schema.ts` | Zod schemas that validate every frontmatter field at build time |
+| `src/lib/content/index.ts` | Loaders: `getAllArticles`, `getIssues`, `getAuthor`, `getRelatedArticles`, … |
+| `src/components/motion/` | Reusable animation primitives (Reveal, TextReveal, TiltCard, Magnetic, Marquee, Counter, Parallax, ProgressBar, Cursor, PageTransition) |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Add an article
 
-## Learn More
+1. Add the author(s) to `content/authors/<slug>.mdx` if they are new.
+2. Put the PDF in `public/pdfs/`.
+3. Create `content/articles/<slug>.mdx`:
 
-To learn more about Next.js, take a look at the following resources:
+```mdx
+---
+title: Your title
+subtitle: Optional subtitle
+authors: [author-slug, another-author-slug]
+issue: vol-02-issue-01
+abstract: One paragraph.
+keywords: [keyword one, keyword two]
+doi: 10.99999/scholar.2026.1.4
+pdf: /pdfs/your-file.pdf
+received: 2026-01-10
+accepted: 2026-03-01
+published: 2026-04-10
+pages: 57-80
+type: research        # research | review | editorial | short-communication | perspective
+featured: false
+---
+## Introduction
+Body text in Markdown. You can use <Figure caption="…">, <Callout title="…"> and <Equation>.
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+4. Add the slug to the `articles:` list of the issue file to control its order in the issue.
+5. Run `npm run build`. Invalid or missing fields fail the build with a clear message.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+The article automatically appears in the archive, its issue, each author's page, related-article lists, search, the RSS feed, and the sitemap. It also gets an Open Graph image, Google Scholar `citation_*` meta tags, and `ScholarlyArticle` JSON-LD.
 
-## Deploy on Vercel
+## Add an issue
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Create `content/issues/vol-0X-issue-0Y.mdx` with `volume`, `number`, `year`, `season`, `published`, `summary`, and `articles: [...]`. Set `current: true` on the newest issue (and remove it from the previous one). The cover is generated typographically, so no image is needed.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Configure
+
+- Set `NEXT_PUBLIC_SITE_URL` to the production URL before building so canonical links, the feed, the sitemap, and OG images use the right domain.
+- Edit `src/lib/site.ts` for the journal name, ISSN, publisher, contact email, nav, editorial board, and indexing partners.
+- Design tokens (colours, fonts, radii) are CSS variables at the top of `src/app/globals.css`.
+
+## Deploy
+
+The site is fully static. Deploy to Vercel with zero configuration, or set `output: "export"` in `next.config.ts` and upload the `out/` folder to any static host (Netlify, Cloudflare Pages, GitHub Pages).
+
+## Placeholder PDFs
+
+`scripts/make-placeholder-pdfs.mjs` generates one-page placeholder PDFs for every article that declares a `pdf` path. Replace them with the real typeset files.
